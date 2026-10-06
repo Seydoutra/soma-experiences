@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://seydoutra.github.io/soma-experiences"),
-  title: { default: "SŌMA Experiences — Agence événementielle à Conakry", template: "%s — SŌMA Experiences" },
+  title: { default: "SŌMA Experiences | Agence événementielle à Conakry", template: "%s | SŌMA Experiences" },
   description: "SŌMA Experiences imagine, conçoit et produit des événements élégants et profondément personnalisés à Conakry, en Guinée.",
   keywords: ["agence événementielle Conakry", "organisation événement Guinée", "event planner Guinée", "agence créative Conakry", "photographe Conakry"],
   alternates: { languages: { fr: "/fr", en: "/en" } },
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const event = {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: "Onomo Vibes — Splash & Grill (2ᵉ édition)",
+    name: "Onomo Vibes, Splash & Grill (2ᵉ édition)",
     startDate: "2026-11-21",
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",

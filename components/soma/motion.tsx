@@ -6,7 +6,7 @@ import Lenis from "lenis";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-/** Lenis smooth scrolling (Octolane-like inertia). Disabled for reduced motion. */
+/** Smooth inertial scrolling, off when the user prefers reduced motion. */
 export function SmoothScroll() {
   const reduce = useReducedMotion();
   useEffect(() => {
@@ -142,7 +142,7 @@ export function Marquee({ children, reverse = false, speed = 40, className }: { 
   );
 }
 
-/** Card with a radial spotlight that follows the pointer (Octolane-style bento). */
+/** Card with a soft light that follows the pointer. */
 export function Spotlight({ children, className, style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
   return (
