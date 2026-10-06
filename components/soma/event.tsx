@@ -92,7 +92,7 @@ export function EventSpotlight({ lang }: { lang: Lang }) {
       <div className="event-glow" />
       <div className="container event-grid">
         <Reveal className="event-media">
-          <ParallaxImage src={IMG.signage} alt={`${EVENT.name} — ${EVENT.subtitle}`} amount={8} />
+          <ParallaxImage src={IMG.signage} alt={`${EVENT.name}, ${EVENT.subtitle}`} amount={8} />
           <span className="event-badge">{tx(lang, EVENT.edition)}</span>
           <Sticker lang={lang} />
         </Reveal>
@@ -125,7 +125,7 @@ export function EventChip({ lang }: { lang: Lang }) {
   const when = d === null ? "21.11.2026" : d === 0 ? (lang === "fr" ? "C’est aujourd’hui" : "Today") : `J-${d}`;
   return (
     <a className="hero-chip" href={EVENT.tickets} target="_blank" rel="noreferrer">
-      <span className="pulse" /><strong>{EVENT.name}</strong> · {tx(lang, EVENT.edition)} — {when}<em>{lang === "fr" ? "Billets" : "Tickets"}<ArrowUpRight /></em>
+      <span className="pulse" /><strong>{EVENT.name}</strong> · {tx(lang, EVENT.edition)} · {when}<em>{lang === "fr" ? "Billets" : "Tickets"}<ArrowUpRight /></em>
     </a>
   );
 }
@@ -164,6 +164,6 @@ export function EventBanner({ lang }: { lang: Lang }) {
 export function EventMenuLink({ lang, onClick }: { lang: Lang; onClick?: () => void }) {
   const live = useEventLive();
   if (!live) return null;
-  return <a className="menu-event" href={EVENT.tickets} target="_blank" rel="noreferrer" onClick={onClick}><span className="pulse" /><div><small>{tx(lang, EVENT.edition)} · 21.11.2026</small><strong>{EVENT.name} — {lang === "fr" ? "Billets" : "Tickets"}</strong></div><ArrowUpRight /></a>;
+  return <a className="menu-event" href={EVENT.tickets} target="_blank" rel="noreferrer" onClick={onClick}><span className="pulse" /><div><small>{tx(lang, EVENT.edition)} · 21.11.2026</small><strong>{EVENT.name} · {lang === "fr" ? "Billets" : "Tickets"}</strong></div><ArrowUpRight /></a>;
 }
 
