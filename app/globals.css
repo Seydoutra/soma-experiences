@@ -489,6 +489,10 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
 .page-hero.with-image + .section { padding-top: clamp(88px, 11vw, 160px); }
 
 .story { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+.founder-split { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(32px, 6vw, 90px); align-items: center; }
+.founder-split .about-founder { min-height: 640px; }
+.founder-split .two-col { grid-template-columns: 1fr; gap: 18px; }
+.about-founder .parallax img { object-position: 50% 20%; }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; color: var(--ink-soft); }
 .two-col p { margin: 0; }
 .mv { overflow: hidden; }
@@ -645,6 +649,8 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
   .header-tickets { padding: 0 12px; }
   .header-cta { display: none; }
   .about-top, .story { grid-template-columns: 1fr; gap: 0; }
+  .founder-split { grid-template-columns: 1fr; }
+  .founder-split .about-founder { min-height: 520px; }
   .about-grid, .process-grid, .faq-grid, .contact-grid, .mv-grid, .two-col { grid-template-columns: 1fr; }
   .about-founder { min-height: 480px; }
   .process-sticky { position: relative; top: 0; }

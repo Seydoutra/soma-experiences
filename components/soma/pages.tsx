@@ -39,11 +39,15 @@ export function AboutPage({ lang }: { lang: Lang }) {
   const values = lang === "fr" ? ["Créativité", "Élégance", "Confiance", "Proximité", "Fiabilité", "Détail"] : ["Creativity", "Elegance", "Trust", "Closeness", "Reliability", "Detail"];
   return (
     <>
-      <PageHero lang={lang} eyebrow={fr(lang, "À propos", "About")} title={fr(lang, "Créer avec intention. *Recevoir avec émotion.*", "Create with intention. *Welcome with emotion.*")} image={IMG.fashionClose} />
+      <PageHero lang={lang} eyebrow={fr(lang, "À propos", "About")} title={fr(lang, "Créer avec intention. *Recevoir avec émotion.*", "Create with intention. *Welcome with emotion.*")} />
       <section className="section">
-        <div className="container story">
-          <Reveal><Eyebrow>{fr(lang, "La vision", "The vision")}</Eyebrow></Reveal>
+        <div className="container founder-split">
+          <Reveal className="about-founder">
+            <ParallaxImage src={IMG.catherine} alt={fr(lang, "Catherine Soumah, fondatrice de SŌMA Experiences", "Catherine Soumah, founder of SŌMA Experiences")} amount={6} />
+            <div className="founder-tag"><strong>Catherine Soumah</strong><span>{fr(lang, "Fondatrice & Directrice Créative", "Founder & Creative Director")}</span></div>
+          </Reveal>
           <div>
+            <Reveal><Eyebrow>{fr(lang, "La vision", "The vision")}</Eyebrow></Reveal>
             <ScrollHighlight className="about-statement" text={fr(lang, "Fondatrice et directrice créative, Catherine Soumah construit SŌMA comme une *maison de création* ancrée à Conakry et connectée au monde.", "Founder and creative director Catherine Soumah is building SŌMA as a *creative house* rooted in Conakry and connected to the world.")} />
             <div className="two-col">
               <Reveal><p>{fr(lang, "Sa pratique réunit stratégie, culture visuelle, hospitalité et rigueur de production. Autour d’elle, SŌMA rassemble création, production et hospitalité dans une seule maison.", "Her practice combines strategy, visual culture, hospitality and production rigour. Around her, SŌMA brings creation, production and hospitality together in one house.")}</p></Reveal>
