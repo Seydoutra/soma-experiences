@@ -19,6 +19,7 @@ export const IMG = {
   bar: asset("/images/soma-bar-service.webp"),
   fashionClose: asset("/images/fashion-portrait-close.webp"),
   fashionFull: asset("/images/fashion-portrait-full.webp"),
+  catherine: asset("/images/catherine-soumah.webp"),
   logo: asset("/images/logo-horizontal.png"),
   mark: asset("/images/logo-mark.png"),
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { ArrowUpRight, Camera, Check, Clapperboard, GlassWater, Lightbulb, Megaphone, Minus, Plus, Sparkles, Star } from "lucide-react";
+import { ArrowUpRight, Camera, Check, Clapperboard, GlassWater, Lightbulb, Megaphone, Minus, Plus, Sparkles } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from "motion/react";
 import { CONTACT, FAQ, IMG, OFFERS, POSTS, PROJECTS, SERVICES, STEPS, TESTIMONIALS, WORLDS, type Lang, tx, waLink } from "./data";
 import { Btn, Eyebrow, L } from "./chrome";
@@ -53,7 +53,7 @@ export function Hero({ lang }: { lang: Lang }) {
         </motion.div>
         <SplitWords as="h1" immediate delay={0.15} className="hero-title" text={fr(lang, "Transformer chaque idée en *expérience.*", "Turning every idea into an *experience.*")} />
         <motion.p className="hero-intro" initial={{ opacity: 0, y: 16, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ delay: 0.75, duration: 0.9, ease: EASE }}>
-          {fr(lang, "SŌMA imagine, conçoit et produit des expériences élégantes, immersives et profondément personnalisées — événements, concepts signature, bar et image.", "SŌMA imagines, designs and produces elegant, immersive and deeply personal experiences — events, signature concepts, bar and image.")}
+          {fr(lang, "SŌMA imagine, conçoit et produit des expériences élégantes, immersives et profondément personnalisées : événements, concepts signature, bar et image.", "SŌMA imagines, designs and produces elegant, immersive and deeply personal experiences: events, signature concepts, bar and image.")}
         </motion.p>
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.9, ease: EASE }}>
           <Btn lang={lang} to="reservation">{fr(lang, "Réserver une consultation", "Book a consultation")}</Btn>
@@ -61,7 +61,7 @@ export function Hero({ lang }: { lang: Lang }) {
         </motion.div>
         <motion.div className="hero-proof" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.1, duration: 1 }}>
           <div className="avatars">{[IMG.portraitWhite, IMG.editorial, IMG.fashionClose, IMG.portraitBlack].map((s) => <img key={s} src={s} alt="" />)}</div>
-          <div><span className="stars">{Array.from({ length: 5 }).map((_, i) => <Star key={i} />)}</span><small>{fr(lang, "+40 expériences imaginées à Conakry", "40+ experiences imagined in Conakry")}</small></div>
+          <div><small>{fr(lang, "+40 expériences imaginées à Conakry", "40+ experiences imagined in Conakry")}</small></div>
         </motion.div>
       </div>
 
@@ -108,7 +108,7 @@ function About({ lang }: { lang: Lang }) {
         </div>
         <div className="about-grid">
           <Reveal className="about-founder">
-            <ParallaxImage src={IMG.fashionClose} alt={fr(lang, "Direction créative SŌMA", "SŌMA creative direction")} />
+            <ParallaxImage src={IMG.catherine} alt={fr(lang, "Catherine Soumah, fondatrice de SŌMA Experiences", "Catherine Soumah, founder of SŌMA Experiences")} amount={6} />
             <div className="founder-tag"><strong>Catherine Soumah</strong><span>{fr(lang, "Fondatrice & Directrice Créative", "Founder & Creative Director")}</span></div>
           </Reveal>
           <div className="about-side">
@@ -316,7 +316,6 @@ function Testimonials({ lang }: { lang: Lang }) {
   const half = Math.ceil(TESTIMONIALS.length / 2);
   const card = (t: (typeof TESTIMONIALS)[number], k: string) => (
     <figure key={k} className="t-card">
-      <span className="stars">{Array.from({ length: 5 }).map((_, i) => <Star key={i} />)}</span>
       <blockquote>“{tx(lang, t.q)}”</blockquote>
       <figcaption><img src={t.img} alt="" />{tx(lang, t.by)}</figcaption>
     </figure>
