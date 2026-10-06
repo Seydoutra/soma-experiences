@@ -5,6 +5,7 @@ import { ArrowUpRight, Camera, Check, Clapperboard, GlassWater, Lightbulb, Megap
 import { AnimatePresence, motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from "motion/react";
 import { CONTACT, FAQ, IMG, OFFERS, POSTS, PROJECTS, SERVICES, STEPS, TESTIMONIALS, WORLDS, type Lang, tx, waLink } from "./data";
 import { Btn, Eyebrow, L } from "./chrome";
+import { EventChip, EventSpotlight } from "./event";
 import { Counter, EASE, Marquee, ParallaxImage, Reveal, ScrollHighlight, SplitWords, Spotlight } from "./motion";
 
 const fr = (lang: Lang, a: string, b: string) => (lang === "fr" ? a : b);
@@ -14,6 +15,7 @@ export default function Home({ lang }: { lang: Lang }) {
     <>
       <Hero lang={lang} />
       <Ticker lang={lang} />
+      <EventSpotlight lang={lang} />
       <About lang={lang} />
       <ServicesBento lang={lang} />
       <WorldsStack lang={lang} />
@@ -46,8 +48,8 @@ export function Hero({ lang }: { lang: Lang }) {
       <motion.div className="hero-glow" style={{ y: glowY }} />
       <div className="hero-grid" />
       <div className="hero-copy">
-        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }} className="hero-chip">
-          <span className="pulse" />{fr(lang, "Maison créative · Conakry, Guinée", "Creative house · Conakry, Guinea")}<ArrowUpRight />
+        <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE }}>
+          <EventChip lang={lang} />
         </motion.div>
         <SplitWords as="h1" immediate delay={0.15} className="hero-title" text={fr(lang, "Transformer chaque idée en *expérience.*", "Turning every idea into an *experience.*")} />
         <motion.p className="hero-intro" initial={{ opacity: 0, y: 16, filter: "blur(8px)" }} animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} transition={{ delay: 0.75, duration: 0.9, ease: EASE }}>

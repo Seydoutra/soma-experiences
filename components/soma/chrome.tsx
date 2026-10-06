@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { ArrowRight, ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "motion/react";
-import { CONTACT, IMG, NAV, type Lang, tx, waLink } from "./data";
+import { CONTACT, IMG, NAV, SOCIAL, type Lang, tx, waLink } from "./data";
+import { EventMenuLink, HeaderTickets } from "./event";
 import { EASE, Magnetic, Reveal } from "./motion";
 
 export const href = (lang: Lang, path = "") => `/${lang}${path ? `/${path}` : ""}`;
@@ -51,6 +52,7 @@ export function Header({ lang, page, detail }: { lang: Lang; page: string; detai
             ))}
           </nav>
           <div className="header-actions">
+            <HeaderTickets lang={lang} />
             <Link className="lang" href={langHref}>{lang === "fr" ? "EN" : "FR"}</Link>
             <L lang={lang} to="reservation" className="btn btn-gold btn-sm header-cta"><span>{lang === "fr" ? "Réserver" : "Book"}</span><i><ArrowUpRight /><ArrowUpRight /></i></L>
             <button className="menu-toggle" onClick={() => setOpen(true)} aria-label="Menu"><Menu /></button>
@@ -64,6 +66,7 @@ export function Header({ lang, page, detail }: { lang: Lang; page: string; detai
               <img src={IMG.mark} alt="" />
               <button onClick={() => setOpen(false)} aria-label={lang === "fr" ? "Fermer" : "Close"}><X /></button>
             </div>
+            <EventMenuLink lang={lang} onClick={() => setOpen(false)} />
             <nav>
               {[{ slug: "", label: { fr: "Accueil", en: "Home" } }, ...NAV].map((n, i) => (
                 <motion.div key={n.slug} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.04, duration: 0.6, ease: EASE }}>
@@ -110,13 +113,17 @@ export function Footer({ lang }: { lang: Lang }) {
           <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           <a href={waLink(lang === "fr" ? "Bonjour SŌMA Experiences !" : "Hello SŌMA Experiences!")} target="_blank" rel="noreferrer">{CONTACT.phone}</a>
           <span>{tx(lang, CONTACT.city)}</span>
+          <div className="socials">
+            <a href={SOCIAL.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4ZM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4ZM21.9 7.9c-.1-1.6-.4-3-1.6-4.2C19.1 2.5 17.7 2.2 16.1 2.1 14.5 2 9.5 2 7.9 2.1c-1.6.1-3 .4-4.2 1.6C2.5 4.9 2.2 6.3 2.1 7.9 2 9.5 2 14.5 2.1 16.1c.1 1.6.4 3 1.6 4.2 1.2 1.2 2.6 1.5 4.2 1.6 1.6.1 6.6.1 8.2 0 1.6-.1 3-.4 4.2-1.6 1.2-1.2 1.5-2.6 1.6-4.2.1-1.6.1-6.6 0-8.2Zm-2.1 10a3.3 3.3 0 0 1-1.9 1.9c-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.9-1.9c-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9a3.3 3.3 0 0 1 1.9-1.9c1.3-.5 4.4-.4 5.9-.4s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9Z"/></svg></a>
+            <a href={SOCIAL.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .5 0 .8.1V9.7a5.8 5.8 0 1 0 4.9 5.7V9.1a7.4 7.4 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.2-1.6Z"/></svg></a>
+          </div>
         </Reveal>
       </div>
       <div className="footer-word" aria-hidden><span>SŌMA</span></div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} SŌMA Experiences</span>
         <span>{lang === "fr" ? "Maison créative · Conakry" : "Creative house · Conakry"}</span>
-        <span>Instagram · TikTok</span>
+        <span><a href={SOCIAL.instagram} target="_blank" rel="noreferrer">Instagram</a> · <a href={SOCIAL.tiktok} target="_blank" rel="noreferrer">TikTok</a></span>
       </div>
     </footer>
   );

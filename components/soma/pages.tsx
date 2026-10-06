@@ -7,6 +7,7 @@ import { CONTACT, FAQ, GALLERY, IMG, POSTS, PRODUCTS, PROJECTS, SERVICES, WORLDS
 import { Btn, Eyebrow, L } from "./chrome";
 import { EASE, Marquee, ParallaxImage, Reveal, ScrollHighlight, SplitWords, Spotlight } from "./motion";
 import { FaqList, FinalCta, Offers, Process, WorldsStack } from "./home";
+import { EventBanner } from "./event";
 
 const fr = (lang: Lang, a: string, b: string) => (lang === "fr" ? a : b);
 
@@ -122,6 +123,7 @@ export function WorldDetail({ lang, slug }: { lang: Lang; slug: string }) {
           </div>
         </div>
       </section>
+      {w.slug === "vibes-by-soma" && <EventBanner lang={lang} />}
       <section className="section tight">
         <div className="container shots">{w.shots.map((s, i) => <Reveal key={s} delay={i * 0.08} className={`shot shot-${i}`}><ParallaxImage src={s} alt="" amount={8} /></Reveal>)}</div>
       </section>
@@ -158,6 +160,7 @@ export function ProjectsPage({ lang, slug }: { lang: Lang; slug: string }) {
             </div>
           </div>
         </section>
+        {p.slug === "nomo-vibes" && <EventBanner lang={lang} />}
         <section className="section tight"><div className="container shots">{p.gallery.map((s, i) => <Reveal key={s} delay={i * 0.08} className={`shot shot-${i}`}><ParallaxImage src={s} alt="" amount={8} /></Reveal>)}</div></section>
         <section className="section"><div className="container"><L lang={lang} to={`realisations/${next.slug}`} className="next-link" data-cursor="view"><span>{fr(lang, "Projet suivant", "Next project")}</span><h2>{next.name}</h2><i><ArrowRight /></i><img src={next.image} alt="" /></L></div></section>
         <FinalCta lang={lang} />
