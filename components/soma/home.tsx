@@ -231,9 +231,9 @@ function WorldCard({ lang, i, total, progress }: { lang: Lang; i: number; total:
           <p className="world-tag">{tx(lang, w.tag)}</p>
           <p>{tx(lang, w.story)}</p>
           <ul>{w.services[lang].map((s) => <li key={s}><span />{s}</li>)}</ul>
-          <L lang={lang} to={`univers/${w.slug}`} className="link-arrow light">{fr(lang, "Explorer l’univers", "Explore the world")}<ArrowUpRight /></L>
+          <L lang={lang} to={w.site ?? `univers/${w.slug}`} className="link-arrow light">{w.site ? fr(lang, "Visiter le site", "Visit the site") : fr(lang, "Explorer l’univers", "Explore the world")}<ArrowUpRight /></L>
         </div>
-        <L lang={lang} to={`univers/${w.slug}`} className="world-card-media" data-cursor="view" aria-label={w.name}><img src={w.image} alt={w.name} loading="lazy" /></L>
+        <L lang={lang} to={w.site ?? `univers/${w.slug}`} className="world-card-media" data-cursor="view" aria-label={w.name}><img src={w.image} alt={w.name} loading="lazy" /></L>
         <motion.div className="world-dim" style={{ opacity: dim }} />
       </motion.div>
     </div>

@@ -7,6 +7,7 @@ import type { Lang } from "./soma/data";
 import { Footer, Header, WhatsAppFab } from "./soma/chrome";
 import { Cursor, EASE, ScrollProgress, SmoothScroll, scrollToTop } from "./soma/motion";
 import Home from "./soma/home";
+import VibesSite from "./vibes-site";
 import { AboutPage, BookingPage, ContactPage, FaqPage, GalleryPage, JournalPage, ProjectsPage, ServicesPage, ShopPage, WorldDetail, WorldsPage } from "./soma/pages";
 
 export default function SomaSite() {
@@ -20,6 +21,8 @@ export default function SomaSite() {
 
   useEffect(() => { scrollToTop(); }, [pathname]);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+
+  if (page === "vibes") return <VibesSite lang={lang} sub={detail} detail={parts[3] || ""} pathname={pathname} />;
 
   const view = (() => {
     switch (page) {

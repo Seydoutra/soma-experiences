@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight, CalendarDays, Ticket } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { EVENT, IMG, SOCIAL, type Lang, tx } from "./data";
-import { Btn, Eyebrow } from "./chrome";
+import { Btn, Eyebrow, L } from "./chrome";
 import { EASE, ParallaxImage, Reveal, SplitWords } from "./motion";
 
 const START = Date.parse(EVENT.start);
@@ -84,7 +84,7 @@ function Sticker({ lang }: { lang: Lang }) {
 }
 
 /** Full event feature: image, title, date, countdown and ticket CTA. Hidden once the event is over. */
-export function EventSpotlight({ lang }: { lang: Lang }) {
+export function EventSpotlight({ lang, vibesLink = true }: { lang: Lang; vibesLink?: boolean }) {
   const live = useEventLive();
   if (!live) return null;
   return (
@@ -111,6 +111,7 @@ export function EventSpotlight({ lang }: { lang: Lang }) {
             <Btn lang={lang} to={SOCIAL.instagram} external variant="ghost">{lang === "fr" ? "Suivre sur Instagram" : "Follow on Instagram"}</Btn>
           </Reveal>
           <Reveal delay={0.25}><p className="event-note">{lang === "fr" ? "Billetterie sécurisée via Billetfacile. Places limitées." : "Secure ticketing via Billetfacile. Limited spots."}</p></Reveal>
+          {vibesLink && <Reveal delay={0.3}><L lang={lang} to="vibes" className="link-arrow light event-vibes">{lang === "fr" ? "Découvrir le site VIBES by SŌMA" : "Visit the VIBES by SŌMA site"}<ArrowUpRight /></L></Reveal>}
         </div>
       </div>
     </section>

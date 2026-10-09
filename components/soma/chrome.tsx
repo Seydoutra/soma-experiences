@@ -53,6 +53,7 @@ export function Header({ lang, page, detail }: { lang: Lang; page: string; detai
           </nav>
           <div className="header-actions">
             <HeaderTickets lang={lang} />
+            <L lang={lang} to="vibes" className="header-vibes" aria-label="VIBES by SŌMA">VIBES<small>by SŌMA</small></L>
             <Link className="lang" href={langHref}>{lang === "fr" ? "EN" : "FR"}</Link>
             <L lang={lang} to="reservation" className="btn btn-gold btn-sm header-cta"><span>{lang === "fr" ? "Réserver" : "Book"}</span><i><ArrowUpRight /><ArrowUpRight /></i></L>
             <button className="menu-toggle" onClick={() => setOpen(true)} aria-label="Menu"><Menu /></button>
@@ -67,6 +68,7 @@ export function Header({ lang, page, detail }: { lang: Lang; page: string; detai
               <button onClick={() => setOpen(false)} aria-label={lang === "fr" ? "Fermer" : "Close"}><X /></button>
             </div>
             <EventMenuLink lang={lang} onClick={() => setOpen(false)} />
+            <Link href={href(lang, "vibes")} className="menu-vibes" onClick={() => setOpen(false)}><div><small>{lang === "fr" ? "Concepts signature & lifestyle" : "Signature concepts & lifestyle"}</small><strong>VIBES <em>by SŌMA</em></strong></div><ArrowUpRight /></Link>
             <nav>
               {[{ slug: "", label: { fr: "Accueil", en: "Home" } }, ...NAV].map((n, i) => (
                 <motion.div key={n.slug} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.04, duration: 0.6, ease: EASE }}>
@@ -106,6 +108,7 @@ export function Footer({ lang }: { lang: Lang }) {
         <Reveal className="footer-col" delay={0.1}>
           <p>{lang === "fr" ? "Maison" : "House"}</p>
           {NAV.slice(5).map((n) => <L key={n.slug} lang={lang} to={n.slug}>{tx(lang, n.label)}</L>)}
+          <L lang={lang} to="vibes">VIBES by SŌMA</L>
           <L lang={lang} to="reservation">{lang === "fr" ? "Réservation" : "Booking"}</L>
         </Reveal>
         <Reveal className="footer-col" delay={0.15}>
@@ -129,9 +132,9 @@ export function Footer({ lang }: { lang: Lang }) {
   );
 }
 
-export function WhatsAppFab({ lang }: { lang: Lang }) {
+export function WhatsAppFab({ lang, message }: { lang: Lang; message?: string }) {
   return (
-    <a className="whatsapp" href={waLink(lang === "fr" ? "Bonjour SŌMA Experiences, je souhaite obtenir des informations concernant vos services." : "Hello SŌMA Experiences, I’d like some information about your services.")} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+    <a className="whatsapp" href={waLink(message ?? (lang === "fr" ? "Bonjour SŌMA Experiences, je souhaite obtenir des informations concernant vos services." : "Hello SŌMA Experiences, I’d like some information about your services."))} target="_blank" rel="noreferrer" aria-label="WhatsApp">
       <svg viewBox="0 0 24 24" aria-hidden><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.34A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.03.8.8-2.95-.2-.3a8.2 8.2 0 1 1 6.93 3.78Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.53.06a6.7 6.7 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.66.31 2.77 2.77 0 0 0-.86 2.06c0 1.21.88 2.38 1 2.55.13.16 1.74 2.66 4.22 3.73 1.57.68 2.18.74 2.97.62.48-.07 1.46-.6 1.67-1.18.2-.58.2-1.08.14-1.18-.06-.1-.22-.17-.47-.29Z" /></svg>
     </a>
   );
