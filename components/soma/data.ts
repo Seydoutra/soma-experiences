@@ -61,7 +61,7 @@ export const NAV: { slug: string; label: Tx }[] = [
   { slug: "contact", label: { fr: "Contact", en: "Contact" } },
 ];
 
-export type World = { slug: string; name: string; tag: Tx; image: string; color: string; story: Tx; services: { fr: string[]; en: string[] }; shots: string[] };
+export type World = { slug: string; site?: string; name: string; tag: Tx; image: string; color: string; story: Tx; services: { fr: string[]; en: string[] }; shots: string[] };
 export const WORLDS: World[] = [
   {
     slug: "soma-experiences", name: "SŌMA Experiences", color: "#c39a5b", image: IMG.hero,
@@ -71,7 +71,7 @@ export const WORLDS: World[] = [
     shots: [IMG.hero, IMG.crowd, IMG.performance],
   },
   {
-    slug: "vibes-by-soma", name: "VIBES by SŌMA", color: "#e0773d", image: IMG.foam,
+    slug: "vibes-by-soma", site: "vibes", name: "VIBES by SŌMA", color: "#e0773d", image: IMG.foam,
     tag: { fr: "Concepts signature & lifestyle", en: "Signature concepts & lifestyle" },
     story: { fr: "Des rendez-vous signature qui captent l’énergie d’une génération et transforment un lieu en scène sociale, musicale et visuelle.", en: "Signature gatherings that capture a generation’s energy and turn a venue into a social, musical and visual stage." },
     services: { fr: ["Concepts propriétaires", "Programmation", "Expérience de marque"], en: ["Owned concepts", "Programming", "Brand experience"] },
