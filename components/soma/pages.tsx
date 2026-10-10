@@ -123,7 +123,7 @@ export function WorldDetail({ lang, slug }: { lang: Lang; slug: string }) {
             <div className="world-services">
               {w.services[lang].map((s, i) => <Reveal key={s} delay={i * 0.08}><Spotlight className="ws-card"><span>0{i + 1}</span><h3>{s}</h3></Spotlight></Reveal>)}
             </div>
-            <Reveal className="row-actions"><Btn lang={lang} to="reservation">{fr(lang, `Réserver avec ${w.name}`, `Book with ${w.name}`)}</Btn><Btn lang={lang} to={waLink(fr(lang, `Bonjour ${w.name}, je souhaite des informations.`, `Hello ${w.name}, I’d like some information.`))} external variant="dark">WhatsApp</Btn></Reveal>
+            <Reveal className="row-actions">{w.site && <Btn lang={lang} to={w.site}>{fr(lang, `Visiter le site ${w.name}`, `Visit the ${w.name} site`)}</Btn>}<Btn lang={lang} to="reservation" variant={w.site ? "dark" : "gold"}>{fr(lang, `Réserver avec ${w.name}`, `Book with ${w.name}`)}</Btn><Btn lang={lang} to={waLink(fr(lang, `Bonjour ${w.name}, je souhaite des informations.`, `Hello ${w.name}, I’d like some information.`))} external variant="dark">WhatsApp</Btn></Reveal>
           </div>
         </div>
       </section>
@@ -165,6 +165,7 @@ export function ProjectsPage({ lang, slug }: { lang: Lang; slug: string }) {
           </div>
         </section>
         {p.slug === "nomo-vibes" && <EventBanner lang={lang} />}
+        {p.slug === "nomo-vibes" && <section className="section tight"><div className="container"><Reveal className="row-actions"><Btn lang={lang} to="vibes/evenements/onomo-vibes" variant="dark">{fr(lang, "Onomo Vibes sur le site VIBES by SŌMA", "Onomo Vibes on the VIBES by SŌMA site")}</Btn></Reveal></div></section>}
         <section className="section tight"><div className="container shots">{p.gallery.map((s, i) => <Reveal key={s} delay={i * 0.08} className={`shot shot-${i}`}><ParallaxImage src={s} alt="" amount={8} /></Reveal>)}</div></section>
         <section className="section"><div className="container"><L lang={lang} to={`realisations/${next.slug}`} className="next-link" data-cursor="view"><span>{fr(lang, "Projet suivant", "Next project")}</span><h2>{next.name}</h2><i><ArrowRight /></i><img src={next.image} alt="" /></L></div></section>
         <FinalCta lang={lang} />
