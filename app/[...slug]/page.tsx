@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import SomaSite from "@/components/soma-site";
 
 const VIBES_PAGES = ["concept", "evenements", "galerie", "partenaires", "contact"];
-const VIBES_EVENTS = ["onomo-vibes"];
+const VIBES_EVENTS = ["sunset-ritual", "onomo-vibes"];
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -34,12 +34,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const [lang, page, sub, detail] = (await params).slug;
   if (page !== "vibes") return {};
   const en = lang === "en";
-  const name = detail === "onomo-vibes" ? "Onomo Vibes, Splash & Grill" : sub ? VIBES_TITLES[sub]?.[en ? "en" : "fr"] : undefined;
+  const name = detail === "sunset-ritual" ? (en ? "Sunset Ritual, Edition 02" : "Sunset Ritual, Édition 02") : detail === "onomo-vibes" ? (en ? "ONOMO Vibes, Edition 01" : "ONOMO Vibes, Édition 01") : sub ? VIBES_TITLES[sub]?.[en ? "en" : "fr"] : undefined;
   return {
     title: { absolute: name ? `${name} | VIBES by SŌMA` : en ? "VIBES by SŌMA | Signature gatherings in Conakry" : "VIBES by SŌMA | Concepts signature à Conakry" },
     description: en
-      ? "VIBES by SŌMA, a SŌMA Experiences house: signature gatherings in Conakry around music, style and sharing."
-      : "VIBES by SŌMA, une maison SŌMA Experiences : des rendez-vous signature à Conakry autour de la musique, du style et du partage.",
+      ? "VIBES by SŌMA, a SŌMA Experiences concept: signature gatherings in Conakry. Next edition: Sunset Ritual, 21 November 2026, Camayenne Beach."
+      : "VIBES by SŌMA, un concept de SŌMA Experiences : des rendez-vous signature à Conakry. Prochaine édition : Sunset Ritual, le 21 novembre 2026, plage Camayenne.",
   };
 }
 

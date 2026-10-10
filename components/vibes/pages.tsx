@@ -5,9 +5,9 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, MapPin, Ticke
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { EVENT, IMG, type Lang, tx, waLink } from "../soma/data";
 import { Btn, Eyebrow, L } from "../soma/chrome";
-import { Countdown, EventChip, EventSpotlight, useEventLive } from "../soma/event";
+import { Countdown, DressCode, EventBanner, EventChip, EventFacts, EventSpotlight, SunsetPoster, useEventLive } from "../soma/event";
 import { EASE, Marquee, ParallaxImage, Reveal, ScrollHighlight, SplitWords, Spotlight } from "../soma/motion";
-import { COLLABS, FORMATS, PILLARS, VIBES_CONTACT, VIBES_EVENTS, VIBES_GALLERY, VIBES_SOCIAL, vpath, type VibesEvent } from "./data";
+import { COLLABS, FORMATS, NEXT_EDITION, PAST_EDITIONS, PILLARS, VIBES_CONTACT, VIBES_EDITIONS, VIBES_GALLERY, VIBES_SOCIAL, vpath, type VibesEdition } from "./data";
 import { VibesPageHero } from "./chrome";
 
 const fr = (lang: Lang, a: string, b: string) => (lang === "fr" ? a : b);
@@ -18,9 +18,9 @@ export function VibesHome({ lang }: { lang: Lang }) {
     <>
       <VibesHero lang={lang} />
       <VibesTicker lang={lang} />
-      <Pillars lang={lang} />
       <EventSpotlight lang={lang} vibesLink={false} />
-      <EventsList lang={lang} withHead />
+      <Pillars lang={lang} />
+      <EditionsList lang={lang} withHead />
       <GalleryStrip lang={lang} />
       <PartnersCta lang={lang} />
       <GroupBlock lang={lang} />
@@ -44,11 +44,11 @@ function VibesHero({ lang }: { lang: Lang }) {
           VIBES<em>by SŌMA</em>
         </motion.h1>
         <motion.p className="vibes-hero-intro" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.9, ease: EASE }}>
-          {fr(lang, "Des rendez-vous signature à Conakry, autour de la musique, du style et du partage.", "Signature gatherings in Conakry, around music, style and sharing.")}
+          {fr(lang, "Un concept de SŌMA Experiences : des rendez-vous signature à Conakry, autour de la musique, du style et du partage. Prochaine édition : Sunset Ritual, le 21 novembre 2026.", "A SŌMA Experiences concept: signature gatherings in Conakry, around music, style and sharing. Next edition: Sunset Ritual, on 21 November 2026.")}
         </motion.p>
         <motion.div className="hero-actions" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.9, ease: EASE }}>
           {live
-            ? <Btn lang={lang} to={EVENT.tickets} external>{fr(lang, `Billets ${EVENT.name}`, `${EVENT.name} tickets`)}</Btn>
+            ? <Btn lang={lang} to={EVENT.tickets} external>{fr(lang, "Prendre mon pass", "Get my pass")}</Btn>
             : <Btn lang={lang} to={vpath("evenements")}>{fr(lang, "Nos événements", "Our events")}</Btn>}
           <Btn lang={lang} to={vpath("concept")} variant="ghost">{fr(lang, "Le concept", "The concept")}</Btn>
         </motion.div>
@@ -58,7 +58,7 @@ function VibesHero({ lang }: { lang: Lang }) {
 }
 
 function VibesTicker({ lang }: { lang: Lang }) {
-  const words = lang === "fr" ? ["Musique", "Style", "Partage", "Splash & Grill", "Conakry", "Good vibes"] : ["Music", "Style", "Sharing", "Splash & Grill", "Conakry", "Good vibes"];
+  const words = lang === "fr" ? ["Sunset Ritual", "Édition 02", "21.11.2026", "Plage Camayenne", "Sunset Neutrals", "Musique", "Style", "Partage"] : ["Sunset Ritual", "Edition 02", "21.11.2026", "Camayenne Beach", "Sunset Neutrals", "Music", "Style", "Sharing"];
   return (
     <section className="vibes-ticker">
       <Marquee speed={34}>{words.map((w) => <span key={w}>{w}<i aria-hidden>✺</i></span>)}</Marquee>
@@ -73,8 +73,8 @@ function Pillars({ lang }: { lang: Lang }) {
         <Reveal><Eyebrow>{fr(lang, "L’esprit VIBES", "The VIBES spirit")}</Eyebrow></Reveal>
         <div>
           <ScrollHighlight className="about-statement" text={fr(lang,
-            "VIBES by SŌMA est la maison des rendez-vous signature de SŌMA Experiences. Chaque soirée est pensée pour transformer un lieu en *scène sociale,* musicale et visuelle.",
-            "VIBES by SŌMA is the home of SŌMA Experiences’ signature gatherings. Every night is designed to turn a venue into a *social,* musical and visual stage.")} />
+            "VIBES by SŌMA est un concept créé par SŌMA Experiences. Chaque événement est une nouvelle édition, pensée pour transformer un lieu en *scène sociale,* musicale et visuelle.",
+            "VIBES by SŌMA is a concept created by SŌMA Experiences. Each event is a new edition, designed to turn a venue into a *social,* musical and visual stage.")} />
           <div className="vibes-cards">
             {PILLARS.map((p, i) => (
               <Reveal key={p.title.fr} delay={i * 0.08}>
@@ -89,41 +89,50 @@ function Pillars({ lang }: { lang: Lang }) {
   );
 }
 
-function EventsList({ lang, withHead }: { lang: Lang; withHead?: boolean }) {
+function EditionsList({ lang, withHead }: { lang: Lang; withHead?: boolean }) {
   return (
     <section className="section">
       <div className="container">
         {withHead && (
           <div className="section-head split">
-            <div><Reveal><Eyebrow>{fr(lang, "Événements", "Events")}</Eyebrow></Reveal><SplitWords text={fr(lang, "Nos rendez-vous *signature.*", "Our signature *gatherings.*")} /></div>
-            <Reveal delay={0.1}><Btn lang={lang} to={vpath("evenements")} variant="dark">{fr(lang, "Tous les événements", "All events")}</Btn></Reveal>
+            <div><Reveal><Eyebrow>{fr(lang, "Les éditions", "The editions")}</Eyebrow></Reveal><SplitWords text={fr(lang, "Une édition, *un rituel.*", "One edition, *one ritual.*")} /></div>
+            <Reveal delay={0.1}><Btn lang={lang} to={vpath("evenements")} variant="dark">{fr(lang, "Toutes les éditions", "All editions")}</Btn></Reveal>
           </div>
         )}
         <div className="vibes-events">
-          {VIBES_EVENTS.map((e) => <EventCard key={e.slug} lang={lang} e={e} />)}
-          <Reveal delay={0.1}>
-            <div className="vibes-event-next">
-              <span>{fr(lang, "À venir", "Coming up")}</span>
-              <h3>{fr(lang, "Les prochains concepts VIBES s’annonceront ici.", "Upcoming VIBES concepts will be announced here.")}</h3>
-              <a className="link-arrow" href={VIBES_SOCIAL.instagram} target="_blank" rel="noreferrer">{fr(lang, "Suivre sur Instagram", "Follow on Instagram")}<ArrowUpRight /></a>
-            </div>
-          </Reveal>
+          {NEXT_EDITION && <UpcomingCard lang={lang} e={NEXT_EDITION} />}
+          {PAST_EDITIONS.map((e) => <PastCard key={e.slug} lang={lang} e={e} />)}
         </div>
       </div>
     </section>
   );
 }
 
-function EventCard({ lang, e }: { lang: Lang; e: VibesEvent }) {
+function UpcomingCard({ lang, e }: { lang: Lang; e: VibesEdition }) {
   return (
     <Reveal>
-      <L lang={lang} to={vpath(`evenements/${e.slug}`)} className="vibes-event-card" data-cursor="view">
-        <div className="vibes-event-img"><img src={e.image} alt={`${e.name}, ${e.subtitle}`} loading="lazy" /></div>
+      <L lang={lang} to={vpath(`evenements/${e.slug}`)} className="vibes-event-card upcoming" data-cursor="view">
+        <div className="vibes-event-img"><SunsetPoster lang={lang} compact /></div>
         <div className="vibes-event-meta">
-          <small>{e.editions.map((x) => x.year).join(" · ")}</small>
-          <h3>{e.name} <em>{e.subtitle}</em></h3>
-          <p>{tx(lang, e.intro)}</p>
-          <span className="link-arrow">{fr(lang, "Voir l’événement", "See the event")}<ArrowUpRight /></span>
+          <small>{fr(lang, "Prochaine édition", "Next edition")} · {tx(lang, e.edition)}</small>
+          <h3>{e.name}</h3>
+          <p>{tx(lang, e.date)} · {tx(lang, e.venue)}</p>
+          <span className="link-arrow">{fr(lang, "Voir l’édition", "See the edition")}<ArrowUpRight /></span>
+        </div>
+      </L>
+    </Reveal>
+  );
+}
+
+function PastCard({ lang, e }: { lang: Lang; e: VibesEdition }) {
+  return (
+    <Reveal delay={0.1}>
+      <L lang={lang} to={vpath(`evenements/${e.slug}`)} className="vibes-edition past" data-cursor="view">
+        {e.image && <img src={e.image} alt={`${e.name}, ${e.subtitle ?? ""}`} loading="lazy" />}
+        <div>
+          <span>{fr(lang, "Édition précédente", "Past edition")} · {tx(lang, e.edition)}</span>
+          <h3>{e.name} {e.subtitle && <em>{e.subtitle}</em>}</h3>
+          <p>{tx(lang, e.date)} · {tx(lang, e.venue)}</p>
         </div>
       </L>
     </Reveal>
@@ -134,7 +143,7 @@ function GalleryStrip({ lang }: { lang: Lang }) {
   return (
     <section className="section dark vibes-strip">
       <div className="container section-head split">
-        <div><Reveal><Eyebrow light>{fr(lang, "Galerie", "Gallery")}</Eyebrow></Reveal><SplitWords text={fr(lang, "L’énergie, *en images.*", "The energy, *in pictures.*")} /></div>
+        <div><Reveal><Eyebrow light>{fr(lang, "Galerie · Édition 01 · ONOMO Vibes", "Gallery · Edition 01 · ONOMO Vibes")}</Eyebrow></Reveal><SplitWords text={fr(lang, "L’énergie, *en images.*", "The energy, *in pictures.*")} /></div>
         <Reveal delay={0.1}><Btn lang={lang} to={vpath("galerie")} variant="light">{fr(lang, "Voir la galerie", "See the gallery")}</Btn></Reveal>
       </div>
       <Marquee speed={60}>{VIBES_GALLERY.map((src) => <img key={src} className="strip-img" src={src} alt="" loading="lazy" />)}</Marquee>
@@ -165,7 +174,7 @@ function PartnersCta({ lang }: { lang: Lang }) {
   );
 }
 
-/** Link back to the parent house. */
+/** Link back to SŌMA Experiences. */
 export function GroupBlock({ lang }: { lang: Lang }) {
   return (
     <section className="section tight">
@@ -174,8 +183,8 @@ export function GroupBlock({ lang }: { lang: Lang }) {
           <L lang={lang} to="" className="vibes-group" data-cursor="view">
             <img src={IMG.mark} alt="" />
             <div>
-              <span>{fr(lang, "Une maison SŌMA Experiences", "A SŌMA Experiences house")}</span>
-              <h3>{fr(lang, "VIBES fait partie de SŌMA Experiences, maison créative et agence événementielle à Conakry.", "VIBES is part of SŌMA Experiences, a creative house and event agency in Conakry.")}</h3>
+              <span>{fr(lang, "Un concept de SŌMA Experiences", "A SŌMA Experiences concept")}</span>
+              <h3>{fr(lang, "VIBES by SŌMA est un concept créé par SŌMA Experiences, agence événementielle et maison créative à Conakry.", "VIBES by SŌMA is a concept created by SŌMA Experiences, an event agency and creative house in Conakry.")}</h3>
             </div>
             <i><ArrowUpRight /></i>
           </L>
@@ -217,12 +226,12 @@ export function ConceptPage({ lang }: { lang: Lang }) {
       </section>
       <section className="section">
         <div className="container story">
-          <Reveal><Eyebrow>{fr(lang, "Le groupe", "The group")}</Eyebrow></Reveal>
+          <Reveal><Eyebrow>SŌMA Experiences</Eyebrow></Reveal>
           <div>
-            <ScrollHighlight className="about-statement" text={fr(lang, "VIBES partage la direction créative de *SŌMA Experiences* et s’appuie sur les savoir-faire de la maison : production, hospitalité et image.", "VIBES shares the creative direction of *SŌMA Experiences* and draws on the house’s skills: production, hospitality and image.")} />
+            <ScrollHighlight className="about-statement" text={fr(lang, "VIBES by SŌMA est un concept créé par *SŌMA Experiences.* Il partage sa direction créative et s’appuie sur ses savoir-faire : production, hospitalité et image.", "VIBES by SŌMA is a concept created by *SŌMA Experiences.* It shares its creative direction and draws on its skills: production, hospitality and image.")} />
             <Reveal className="row-actions">
               <Btn lang={lang} to="" variant="dark">{fr(lang, "Découvrir SŌMA Experiences", "Discover SŌMA Experiences")}</Btn>
-              <Btn lang={lang} to="univers" variant="dark">{fr(lang, "Les univers de la maison", "The house’s worlds")}</Btn>
+              <Btn lang={lang} to="univers" variant="dark">{fr(lang, "Les univers SŌMA", "The SŌMA worlds")}</Btn>
             </Reveal>
           </div>
         </div>
@@ -234,67 +243,70 @@ export function ConceptPage({ lang }: { lang: Lang }) {
 
 /* ============================================================== Events */
 export function EventsPage({ lang, slug }: { lang: Lang; slug: string }) {
-  const e = slug ? VIBES_EVENTS.find((x) => x.slug === slug) : undefined;
-  if (e) return <EventDetail lang={lang} e={e} />;
+  const e = slug ? VIBES_EDITIONS.find((x) => x.slug === slug) : undefined;
+  if (e) return e.status === "upcoming" ? <UpcomingDetail lang={lang} e={e} /> : <PastDetail lang={lang} e={e} />;
   return (
     <>
-      <VibesPageHero lang={lang} label={fr(lang, "Événements", "Events")} title={fr(lang, "Nos rendez-vous *signature.*", "Our signature *gatherings.*")} intro={fr(lang, "Les concepts VIBES by SŌMA, leurs éditions passées et les prochaines dates.", "VIBES by SŌMA concepts, their past editions and upcoming dates.")} />
+      <VibesPageHero lang={lang} label={fr(lang, "Événements", "Events")} title={fr(lang, "Une édition, *un rituel.*", "One edition, *one ritual.*")} intro={fr(lang, "Chaque événement VIBES by SŌMA est une nouvelle édition. Découvrez la prochaine et revivez les précédentes.", "Every VIBES by SŌMA event is a new edition. Discover the next one and relive the previous ones.")} />
       <EventSpotlight lang={lang} vibesLink={false} />
-      <EventsList lang={lang} />
+      <EditionsList lang={lang} />
       <GroupBlock lang={lang} />
     </>
   );
 }
 
-function EventDetail({ lang, e }: { lang: Lang; e: VibesEvent }) {
+function UpcomingDetail({ lang, e }: { lang: Lang; e: VibesEdition }) {
   const live = useEventLive();
-  const upcoming = e.editions.find((x) => x.status === "upcoming");
   return (
     <>
-      <VibesPageHero lang={lang} label={e.name} crumbs={[{ to: "evenements", label: fr(lang, "Événements", "Events") }]} title={`${e.name} *${e.subtitle}.*`} intro={tx(lang, e.intro)} image={e.image} />
+      <VibesPageHero lang={lang} label={e.name} crumbs={[{ to: "evenements", label: fr(lang, "Événements", "Events") }]} title="Sunset *Ritual.*" intro={tx(lang, e.intro)} />
       <section className="section">
-        <div className="container story">
-          <Reveal><Eyebrow>{fr(lang, "Au programme", "On the menu")}</Eyebrow></Reveal>
+        <div className="container sunset-detail">
+          <Reveal className="event-media"><SunsetPoster lang={lang} /></Reveal>
           <div>
+            <Reveal><Eyebrow>{tx(lang, e.edition)} · VIBES by SŌMA</Eyebrow></Reveal>
+            <Reveal><EventFacts lang={lang} /></Reveal>
             <div className="vibes-ingredients">{e.ingredients[lang].map((x, i) => <Reveal key={x} delay={i * 0.06}><span>{x}</span></Reveal>)}</div>
-            {upcoming && live && (
+            <Reveal><DressCode lang={lang} /></Reveal>
+            {live && (
               <Reveal className="vibes-next-edition">
-                <div>
-                  <small>{tx(lang, upcoming.n)}</small>
-                  <p className="vibes-facts"><span><CalendarDays />{upcoming.date ? tx(lang, upcoming.date) : upcoming.year}</span><span><MapPin />Conakry</span><span><Ticket />Billetfacile</span></p>
-                </div>
                 <Countdown lang={lang} />
                 <div className="row-actions">
-                  <Btn lang={lang} to={EVENT.tickets} external>{fr(lang, "Acheter mon billet", "Get my ticket")}</Btn>
+                  <Btn lang={lang} to={EVENT.tickets} external>{fr(lang, "Prendre mon pass", "Get my pass")}</Btn>
                   <Btn lang={lang} to={waLink(fr(lang, `Bonjour VIBES by SŌMA, j’ai une question sur ${e.name}.`, `Hello VIBES by SŌMA, I have a question about ${e.name}.`))} external variant="dark">{fr(lang, "Une question ?", "A question?")}</Btn>
+                </div>
+                <div className="event-qr">
+                  <a href={EVENT.tickets} target="_blank" rel="noreferrer"><img src={EVENT.qr} alt={fr(lang, "QR code de la billetterie Sunset Ritual", "Sunset Ritual ticket office QR code")} /></a>
+                  <p>{fr(lang, "La billetterie est ouverte. Le programme et les informations pratiques seront communiqués prochainement.", "Tickets are on sale. The programme and practical details will be shared soon.")}</p>
                 </div>
               </Reveal>
             )}
           </div>
         </div>
       </section>
-      <section className="section tight">
-        <div className="container">
-          <div className="section-head"><Reveal><Eyebrow>{fr(lang, "Les éditions", "Editions")}</Eyebrow></Reveal></div>
-          <div className="vibes-editions">
-            {e.editions.map((x, i) => (
-              <Reveal key={x.year} delay={i * 0.08}>
-                <div className={`vibes-edition ${x.status}`}>
-                  {x.image && <img src={x.image} alt="" loading="lazy" />}
-                  <div>
-                    <span>{x.status === "upcoming" ? fr(lang, "À venir", "Upcoming") : fr(lang, "Passée", "Past")}</span>
-                    <h3>{tx(lang, x.n)} <em>{x.year}</em></h3>
-                    <p>{tx(lang, x.note)}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+      <EditionsList lang={lang} withHead />
+      <GroupBlock lang={lang} />
+    </>
+  );
+}
+
+function PastDetail({ lang, e }: { lang: Lang; e: VibesEdition }) {
+  return (
+    <>
+      <VibesPageHero lang={lang} label={e.name} crumbs={[{ to: "evenements", label: fr(lang, "Événements", "Events") }]} title={`${e.name} *${e.subtitle ?? ""}.*`} intro={tx(lang, e.intro)} image={e.image} />
+      <section className="section">
+        <div className="container story">
+          <Reveal><Eyebrow>{tx(lang, e.edition)} · VIBES by SŌMA</Eyebrow></Reveal>
+          <div>
+            <p className="vibes-facts dark-facts"><span><CalendarDays />{tx(lang, e.date)}</span><span><MapPin />{tx(lang, e.venue)}</span></p>
+            <div className="vibes-ingredients">{e.ingredients[lang].map((x, i) => <Reveal key={x} delay={i * 0.06}><span>{x}</span></Reveal>)}</div>
           </div>
         </div>
       </section>
-      <section className="section">
-        <div className="container shots">{e.gallery.slice(0, 3).map((s, i) => <Reveal key={s} delay={i * 0.08} className={`shot shot-${i}`}><ParallaxImage src={s} alt="" amount={8} /></Reveal>)}</div>
+      <section className="section tight">
+        <div className="container shots">{e.gallery.slice(0, 3).map((src, i) => <Reveal key={src} delay={i * 0.08} className={`shot shot-${i}`}><ParallaxImage src={src} alt="" amount={8} /></Reveal>)}</div>
       </section>
+      <EventBanner lang={lang} />
       <GroupBlock lang={lang} />
     </>
   );
@@ -316,7 +328,7 @@ export function VibesGalleryPage({ lang }: { lang: Lang }) {
   }, [box, n]);
   return (
     <>
-      <VibesPageHero lang={lang} label={fr(lang, "Galerie", "Gallery")} title={fr(lang, "L’énergie, *en images.*", "The energy, *in pictures.*")} intro={fr(lang, "Des instants pris pendant les soirées VIBES by SŌMA.", "Moments captured during VIBES by SŌMA nights.")} />
+      <VibesPageHero lang={lang} label={fr(lang, "Galerie", "Gallery")} title={fr(lang, "L’énergie, *en images.*", "The energy, *in pictures.*")} intro={fr(lang, "Édition 01 · ONOMO Vibes, Splash & Grill, le 15 août 2026 à l’Hôtel ONOMO Conakry.", "Edition 01 · ONOMO Vibes, Splash & Grill, on 15 August 2026 at Hôtel ONOMO Conakry.")} />
       <section className="section tight vibes-gallery">
         <div className="container masonry">
           {VIBES_GALLERY.map((img, i) => (
@@ -381,7 +393,7 @@ export function VibesContactPage({ lang }: { lang: Lang }) {
 function ContactBlock({ lang, defaultSubject = "event" }: { lang: Lang; defaultSubject?: string }) {
   const [sent, setSent] = useState(false);
   const subjects: [string, string][] = [
-    ["event", fr(lang, "Un événement / la billetterie", "An event / tickets")],
+    ["event", fr(lang, "Sunset Ritual / la billetterie", "Sunset Ritual / tickets")],
     ["partner", fr(lang, "Un partenariat", "A partnership")],
     ["private", fr(lang, "Une privatisation", "A private booking")],
     ["press", fr(lang, "Presse", "Press")],

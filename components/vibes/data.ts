@@ -1,4 +1,4 @@
-import { CONTACT, EVENT, IMG, SOCIAL, type Tx } from "../soma/data";
+import { CONTACT, EVENT, IMG, PAST_EDITION, SOCIAL, type Tx } from "../soma/data";
 
 /** Root of the VIBES site inside the group site. */
 export const VIBES_ROOT = "vibes";
@@ -31,29 +31,64 @@ export const FORMATS: { title: Tx; desc: Tx }[] = [
   { title: { fr: "Expérience de marque", en: "Brand experience" }, desc: { fr: "Des marques associées aux soirées, de façon cohérente avec l’univers.", en: "Brands joining the nights in a way that fits the world." } },
 ];
 
-/** Photos only for editions that took place: the next one shows a plain card. */
-export type Edition = { n: Tx; year: string; date?: Tx; status: "past" | "upcoming"; image?: string; note: Tx };
-export type VibesEvent = { slug: string; name: string; subtitle: string; image: string; intro: Tx; ingredients: { fr: string[]; en: string[] }; editions: Edition[]; gallery: string[] };
+/**
+ * VIBES by SŌMA is a concept created by SŌMA Experiences. Each event is a new
+ * edition. Photos only exist for editions that took place.
+ */
+export type VibesEdition = {
+  slug: string;
+  number: string;
+  name: string;
+  subtitle?: string;
+  edition: Tx;
+  date: Tx;
+  venue: Tx;
+  status: "past" | "upcoming";
+  image?: string;
+  intro: Tx;
+  ingredients: { fr: string[]; en: string[] };
+  gallery: string[];
+};
 
-export const VIBES_EVENTS: VibesEvent[] = [
+export const VIBES_EDITIONS: VibesEdition[] = [
   {
-    slug: "onomo-vibes",
+    slug: EVENT.slug,
+    number: EVENT.number,
     name: EVENT.name,
-    subtitle: EVENT.subtitle,
+    edition: EVENT.edition,
+    date: EVENT.date,
+    venue: EVENT.venue,
+    status: "upcoming",
+    intro: {
+      fr: "La nouvelle édition de VIBES by SŌMA : un rendez-vous au coucher du soleil sur la plage Camayenne, en Sunset Neutrals.",
+      en: "The new VIBES by SŌMA edition: a sunset gathering on Camayenne Beach, dressed in Sunset Neutrals.",
+    },
+    ingredients: { fr: ["Coucher de soleil", "Plage Camayenne", "Musique", "Sunset Neutrals"], en: ["Sunset", "Camayenne Beach", "Music", "Sunset Neutrals"] },
+    gallery: [],
+  },
+  {
+    slug: PAST_EDITION.slug,
+    number: PAST_EDITION.number,
+    name: PAST_EDITION.name,
+    subtitle: PAST_EDITION.subtitle,
+    edition: PAST_EDITION.edition,
+    date: PAST_EDITION.date,
+    venue: PAST_EDITION.venue,
+    status: "past",
     image: IMG.signage,
     intro: {
-      fr: "Le premier rendez-vous signature de VIBES by SŌMA : une journée qui se prolonge en soirée, autour de la musique, de la mousse, du grill et des good vibes.",
-      en: "The first VIBES by SŌMA signature gathering: a day that runs into the night, around music, foam, grill and good vibes.",
+      fr: "La première édition de VIBES by SŌMA, à l’Hôtel ONOMO Conakry : une journée qui se prolonge en soirée, autour de la musique, de la mousse, du grill et des good vibes.",
+      en: "The first VIBES by SŌMA edition, at Hôtel ONOMO Conakry: a day that runs into the night, around music, foam, grill and good vibes.",
     },
     ingredients: { fr: ["Musique", "Mousse", "Grill", "Good vibes"], en: ["Music", "Foam", "Grill", "Good vibes"] },
-    editions: [
-      { n: { fr: "2ᵉ édition", en: "2nd edition" }, year: "2026", date: EVENT.date, status: "upcoming", note: { fr: "Billetterie ouverte sur Billetfacile.", en: "Tickets on sale on Billetfacile." } },
-      { n: { fr: "1ʳᵉ édition", en: "1st edition" }, year: "2025", status: "past", image: IMG.crowd, note: { fr: "La première édition, à Conakry.", en: "The first edition, in Conakry." } },
-    ],
     gallery: [IMG.foam, IMG.crowd, IMG.toast, IMG.performance, IMG.hero],
   },
 ];
 
+export const NEXT_EDITION = VIBES_EDITIONS.find((e) => e.status === "upcoming");
+export const PAST_EDITIONS = VIBES_EDITIONS.filter((e) => e.status === "past");
+
+/** Photos from Edition 01 (ONOMO Vibes). */
 export const VIBES_GALLERY = [IMG.signage, IMG.foam, IMG.crowd, IMG.toast, IMG.performance, IMG.hero, IMG.bottles];
 
 export const COLLABS: { title: Tx; desc: Tx }[] = [

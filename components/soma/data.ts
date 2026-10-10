@@ -25,7 +25,7 @@ export const IMG = {
 };
 
 export const CONTACT = {
-  email: "soumahcatherine@gmail.com",
+  email: "soumahcatherine3@gmail.com",
   phone: "+224 620 327 391",
   wa: "224620327391",
   city: { fr: "Conakry, Guinée", en: "Conakry, Guinea" } as Tx,
@@ -36,15 +36,41 @@ export const SOCIAL = {
   tiktok: "https://www.tiktok.com/@somaexperiences",
 };
 
-/** Next signature event. Conakry is UTC+0. */
+/**
+ * Next VIBES by SŌMA edition (VIBES is a concept created by SŌMA Experiences;
+ * each event is a new edition). Conakry is UTC+0.
+ */
 export const EVENT = {
-  name: "Onomo Vibes",
-  subtitle: "Splash & Grill",
-  edition: { fr: "2ᵉ édition", en: "2nd edition" } as Tx,
+  slug: "sunset-ritual",
+  name: "Sunset Ritual",
+  concept: "VIBES by SŌMA",
+  number: "02",
+  edition: { fr: "Édition 02", en: "Edition 02" } as Tx,
   start: "2026-11-21T00:00:00Z",
   end: "2026-11-22T06:00:00Z",
   date: { fr: "Samedi 21 novembre 2026", en: "Saturday 21 November 2026" } as Tx,
-  tickets: "https://billetfacile.com/evenements/onomo-vibes-splash-and-grill",
+  shortDate: "21.11.2026",
+  venue: { fr: "Plage Camayenne, Conakry", en: "Camayenne Beach, Conakry" } as Tx,
+  dressCode: "Sunset Neutrals",
+  palette: [
+    { name: { fr: "Crème", en: "Cream" } as Tx, hex: "#f3e8d4" },
+    { name: { fr: "Champagne", en: "Champagne" } as Tx, hex: "#e7d2a8" },
+    { name: { fr: "Beige", en: "Beige" } as Tx, hex: "#d6c1a0" },
+    { name: { fr: "Blanc", en: "White" } as Tx, hex: "#ffffff" },
+  ],
+  tickets: "https://billetfacile.com/evenements/soma-experience-vibes-edition-2",
+  qr: asset("/images/qr-sunset-ritual.png"),
+};
+
+/** Edition 01, already held. */
+export const PAST_EDITION = {
+  slug: "onomo-vibes",
+  name: "ONOMO Vibes",
+  subtitle: "Splash & Grill",
+  number: "01",
+  edition: { fr: "Édition 01", en: "Edition 01" } as Tx,
+  date: { fr: "15 août 2026", en: "15 August 2026" } as Tx,
+  venue: { fr: "Hôtel ONOMO Conakry", en: "Hôtel ONOMO Conakry" } as Tx,
 };
 
 export const waLink = (text: string) => `https://wa.me/${CONTACT.wa}?text=${encodeURIComponent(text)}`;
@@ -114,7 +140,7 @@ export const SERVICES: Service[] = [
 
 export type Project = { slug: string; name: string; cat: Tx; year: string; image: string; brief: Tx; gallery: string[] };
 export const PROJECTS: Project[] = [
-  { slug: "nomo-vibes", name: "Onomo Vibes", year: "2025", image: IMG.signage, cat: { fr: "VIBES · Lifestyle", en: "VIBES · Lifestyle" }, brief: { fr: "La première édition d’Onomo Vibes, un rendez-vous signature VIBES by SŌMA pensé pour rassembler une génération autour de la musique, du style et du partage.", en: "The first edition of Onomo Vibes, a VIBES by SŌMA signature gathering designed to bring a generation together around music, style and sharing." }, gallery: [IMG.crowd, IMG.foam, IMG.toast] },
+  { slug: "nomo-vibes", name: "ONOMO Vibes", year: "2026", image: IMG.signage, cat: { fr: "VIBES by SŌMA · Édition 01", en: "VIBES by SŌMA · Edition 01" }, brief: { fr: "ONOMO Vibes, Splash & Grill : la première édition de VIBES by SŌMA, le 15 août 2026 à l’Hôtel ONOMO Conakry. Musique, mousse, grill et good vibes.", en: "ONOMO Vibes, Splash & Grill: the first VIBES by SŌMA edition, on 15 August 2026 at Hôtel ONOMO Conakry. Music, foam, grill and good vibes." }, gallery: [IMG.crowd, IMG.foam, IMG.toast] },
   { slug: "after-dark", name: "After Dark", year: "2025", image: IMG.performance, cat: { fr: "Expérience musicale", en: "Music experience" }, brief: { fr: "Une nuit construite comme une montée en intensité : lumière, son et scénographie au service de l’énergie.", en: "A night built as a rising crescendo: light, sound and staging serving the energy." }, gallery: [IMG.performance, IMG.hero, IMG.crowd] },
   { slug: "golden-hour", name: "Golden Hour", year: "2025", image: IMG.bartender, cat: { fr: "SŌMA Bar", en: "SŌMA Bar" }, brief: { fr: "Une expérience bar au coucher du soleil, entre mixologie sur mesure et hospitalité attentive.", en: "A sunset bar experience blending bespoke mixology and attentive hospitality." }, gallery: [IMG.bar, IMG.bottles, IMG.toast] },
   { slug: "soft-glow-01", name: "Soft Glow 01", year: "2025", image: IMG.fashionFull, cat: { fr: "Portrait éditorial", en: "Editorial portrait" }, brief: { fr: "Une série de portraits éditoriaux à la lumière douce, pensée comme une signature visuelle.", en: "A series of softly lit editorial portraits, conceived as a visual signature." }, gallery: [IMG.fashionClose, IMG.fashionFull, IMG.portraitWhite] },
@@ -140,7 +166,7 @@ export const STEPS: { title: Tx; desc: Tx }[] = [
 export const TESTIMONIALS: { q: Tx; by: Tx; img: string }[] = [
   { q: { fr: "SŌMA a transformé notre intention en une expérience fluide, généreuse et profondément élégante.", en: "SŌMA turned our intention into a fluid, generous and deeply elegant experience." }, by: { fr: "Cliente privée · Conakry", en: "Private client · Conakry" }, img: IMG.portraitWhite },
   { q: { fr: "Une direction précise, une équipe présente et ce supplément d’âme que les invités ressentent immédiatement.", en: "Precise direction, a present team and that extra soul guests feel immediately." }, by: { fr: "Partenaire de production", en: "Production partner" }, img: IMG.editorial },
-  { q: { fr: "Tout semblait naturel. Pourtant, chaque lumière, chaque passage et chaque détail avait été orchestré.", en: "Everything felt natural, yet every light, transition and detail had been orchestrated." }, by: { fr: "Invitée · Onomo Vibes", en: "Guest · Onomo Vibes" }, img: IMG.fashionClose },
+  { q: { fr: "Tout semblait naturel. Pourtant, chaque lumière, chaque passage et chaque détail avait été orchestré.", en: "Everything felt natural, yet every light, transition and detail had been orchestrated." }, by: { fr: "Invitée · ONOMO Vibes", en: "Guest · ONOMO Vibes" }, img: IMG.fashionClose },
   { q: { fr: "Le bar SŌMA a été le cœur de notre soirée. Les cocktails, le service, la mise en scène : tout était juste.", en: "The SŌMA bar was the heart of our evening. Cocktails, service, staging: everything was spot on." }, by: { fr: "Événement corporate", en: "Corporate event" }, img: IMG.portraitBlack },
   { q: { fr: "Des photos qui nous ressemblent enfin. Une direction douce, rassurante et très professionnelle.", en: "Photos that finally look like us. Gentle, reassuring and very professional direction." }, by: { fr: "Séance Soft Glow", en: "Soft Glow session" }, img: IMG.fashionFull },
 ];
