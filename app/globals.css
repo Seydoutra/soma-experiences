@@ -250,6 +250,40 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
 .socials svg { width: 18px; height: 18px; }
 .footer-bottom a:hover { color: var(--gold-light); }
 
+/* ---------- Sunset Ritual (VIBES by SŌMA · Édition 02) ---------- */
+.sunset-poster { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 30px; isolation: isolate; color: #3b2f22; background: linear-gradient(180deg, #fffaf1 0%, #f3e8d4 38%, #e7d2a8 62%, #d6c1a0 100%); box-shadow: 0 0 0 1px rgba(231, 210, 168, 0.5), 0 40px 100px -40px rgba(231, 210, 168, 0.55); }
+.sp-sun { position: absolute; left: 50%; top: 30%; width: 62%; aspect-ratio: 1; transform: translate(-50%, -10%); border-radius: 50%; z-index: -1; background: radial-gradient(circle, #ffffff 0 40%, #fbf1df 60%, rgba(251, 241, 223, 0) 72%); animation: sunrise 9s ease-in-out infinite alternate; }
+@keyframes sunrise { from { transform: translate(-50%, -4%); } to { transform: translate(-50%, -16%); } }
+.sp-sea { position: absolute; left: 0; right: 0; bottom: 0; height: 40%; z-index: -1; background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0 2px, transparent 2px 16px), linear-gradient(180deg, #e7d2a8, #cdb48d); -webkit-mask-image: linear-gradient(180deg, transparent, #000 25%); mask-image: linear-gradient(180deg, transparent, #000 25%); }
+.sp-copy { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 28px 20px; text-align: center; }
+.sp-top, .sp-bottom { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: #6b5a44; }
+.sunset-poster strong { display: flex; flex-direction: column; align-items: center; font-family: var(--sans); font-weight: 300; font-size: clamp(2.6rem, 6vw, 4.6rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; color: #3b2f22; }
+.sunset-poster strong em { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 1.15em; color: #9a7a4c; }
+.sunset-poster.compact { aspect-ratio: auto; height: 100%; min-height: 380px; border-radius: 0; box-shadow: none; }
+.sunset-poster.compact strong { font-size: clamp(2rem, 4vw, 3.2rem); }
+.event-facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.event-facts span { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px; border-radius: 14px; background: rgba(246, 241, 231, 0.06); border: 1px solid var(--line-light); font-weight: 600; font-size: 0.94rem; }
+.event-facts svg { width: 18px; color: var(--gold-light); }
+.dress-code { margin-top: 26px; }
+.dress-code small { display: block; margin-bottom: 10px; font-size: 0.74rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--gold-light); }
+.dress-code > div { display: flex; flex-wrap: wrap; gap: 10px; }
+.dress-code span { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; border-radius: 999px; border: 1px solid var(--line-light); font-size: 0.88rem; }
+.dress-code i { width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); }
+.event-qr { display: flex; align-items: center; gap: 18px; margin-top: 28px; padding: 14px; border-radius: 20px; border: 1px solid var(--line-light); background: rgba(246, 241, 231, 0.04); max-width: 560px; }
+.event-qr img { width: 104px; height: 104px; border-radius: 12px; background: white; flex: none; }
+.event-qr p { margin: 0; font-size: 0.86rem; color: rgba(246, 241, 231, 0.6); }
+.event-banner { background: linear-gradient(100deg, #15120e 30%, #6b5a44 70%, #e7d2a8); }
+.event-banner::before { display: none; }
+.sunset-detail { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 6vw, 90px); align-items: start; }
+.sunset-detail .event-facts span, .dark-facts span { background: var(--night); color: var(--ivory); border-color: transparent; }
+.sunset-detail .dress-code small { color: var(--gold-deep); }
+.sunset-detail .dress-code span { border-color: var(--line); }
+.sunset-detail .vibes-ingredients { margin-top: 26px; }
+.sunset-detail .vibes-next-edition .countdown { margin-top: 0; }
+.vibes-event-card.upcoming .vibes-event-img { min-height: 380px; }
+a.vibes-edition { color: var(--ivory); }
+.vibes .event-media .sunset-poster { box-shadow: 0 0 0 1px rgba(231, 210, 168, 0.4), 0 40px 100px -40px rgba(240, 122, 46, 0.5); }
+
 /* ---------- About ---------- */
 .about { background: var(--ivory); }
 .about-top { display: grid; grid-template-columns: 260px 1fr; gap: 40px; margin-bottom: clamp(56px, 7vw, 100px); }
@@ -642,6 +676,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
   .service-peek { display: none; }
 }
 @media (max-width: 900px) {
+  .sunset-detail { grid-template-columns: 1fr; }
   .event-grid { grid-template-columns: 1fr; }
   .sticker { right: 12px; bottom: -30px; width: 110px; height: 110px; }
   .event-banner { grid-template-columns: 1fr auto; }
@@ -681,6 +716,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
   .fc-1 { display: flex; transform: scale(0.85); left: 3%; top: 5%; }
 }
 @media (max-width: 640px) {
+  .event-qr img { width: 84px; height: 84px; }
   .header-tickets { display: none; }
   .hero-chip { flex-wrap: wrap; justify-content: center; font-size: 0.76rem; }
   .countdown { gap: 8px; }
@@ -769,7 +805,7 @@ h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.035em; line-height:
 .footer-brand .vibes-wordmark em { font-size: 1.5rem; }
 .vibes-brand { padding-left: 6px; }
 
-/* Link back to the group */
+/* Link back to SŌMA Experiences */
 .group-link { display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px 0 6px; border-radius: 999px; border: 1px solid rgba(251, 242, 232, 0.16); font-size: 0.8rem; font-weight: 600; color: rgba(251, 242, 232, 0.8); transition: background 0.3s, color 0.3s; }
 .group-link img { width: 30px; height: 30px; object-fit: cover; transform: scale(1.5); }
 .group-link:hover { background: rgba(255, 255, 255, 0.08); color: var(--ivory); }

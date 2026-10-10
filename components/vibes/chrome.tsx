@@ -107,7 +107,7 @@ export function VibesFooter({ lang }: { lang: Lang }) {
           <p className="footer-tagline">{lang === "fr" ? <>La musique, le style <em>et le partage.</em></> : <>Music, style <em>and sharing.</em></>}</p>
           <L lang={lang} to="" className="group-card">
             <img src={IMG.mark} alt="" />
-            <span><small>{fr(lang, "Une maison", "A house of")}</small>SŌMA Experiences</span>
+            <span><small>{fr(lang, "Un concept de", "A concept by")}</small>SŌMA Experiences</span>
             <ArrowUpRight />
           </L>
         </Reveal>
@@ -117,7 +117,7 @@ export function VibesFooter({ lang }: { lang: Lang }) {
           {VIBES_NAV.map((n) => <L key={n.slug} lang={lang} to={vpath(n.slug)}>{tx(lang, n.label)}</L>)}
         </Reveal>
         <Reveal className="footer-col" delay={0.1}>
-          <p>{fr(lang, "Le groupe", "The group")}</p>
+          <p>SŌMA Experiences</p>
           <L lang={lang} to="">SŌMA Experiences</L>
           <L lang={lang} to="univers">{fr(lang, "Les univers", "The worlds")}</L>
           <L lang={lang} to="services">Services</L>
@@ -136,8 +136,8 @@ export function VibesFooter({ lang }: { lang: Lang }) {
       <div className="footer-word" aria-hidden><span>VIBES</span></div>
       <div className="footer-bottom">
         <span>© {new Date().getFullYear()} VIBES by SŌMA</span>
-        <span>{fr(lang, "Une maison SŌMA Experiences · Conakry", "A SŌMA Experiences house · Conakry")}</span>
-        <L lang={lang} to="">{fr(lang, "Retour au groupe", "Back to the group")}</L>
+        <span>{fr(lang, "Un concept de SŌMA Experiences · Conakry", "A SŌMA Experiences concept · Conakry")}</span>
+        <L lang={lang} to="">{fr(lang, "Retour à SŌMA Experiences", "Back to SŌMA Experiences")}</L>
       </div>
     </footer>
   );

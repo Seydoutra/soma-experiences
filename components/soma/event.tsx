@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, CalendarDays, Ticket } from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin, Shirt, Ticket } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { EVENT, IMG, SOCIAL, type Lang, tx } from "./data";
+import { EVENT, SOCIAL, type Lang, tx } from "./data";
 import { Btn, Eyebrow, L } from "./chrome";
-import { EASE, ParallaxImage, Reveal, SplitWords } from "./motion";
+import { EASE, Reveal, SplitWords } from "./motion";
 
 const START = Date.parse(EVENT.start);
 const END = Date.parse(EVENT.end);
+const fr = (lang: Lang, a: string, b: string) => (lang === "fr" ? a : b);
 
 /** Current time, ticking every second. Null until mounted so server and client markup match. */
 export function useNow() {
@@ -37,6 +38,12 @@ export function daysLeft(now: number | null) {
   return now === null ? null : Math.max(0, Math.ceil((START - now) / 86400000));
 }
 
+function whenLabel(lang: Lang, now: number | null) {
+  const d = daysLeft(now);
+  if (d === null) return EVENT.shortDate;
+  return d === 0 ? fr(lang, "C’est aujourd’hui", "Today") : `J-${d}`;
+}
+
 function Digit({ value }: { value: string }) {
   return (
     <span className="cd-digit">
@@ -50,12 +57,12 @@ function Digit({ value }: { value: string }) {
 export function Countdown({ lang }: { lang: Lang }) {
   const now = useNow();
   if (now !== null && now >= START) {
-    return <div className="countdown live"><span className="pulse" />{lang === "fr" ? "C’est maintenant ! On vous attend." : "It’s happening now! See you there."}</div>;
+    return <div className="countdown live"><span className="pulse" />{fr(lang, "C’est maintenant ! On vous attend.", "It’s happening now! See you there.")}</div>;
   }
   const p = now === null ? null : parts(START - now);
-  const units: [keyof NonNullable<typeof p>, string][] = [["d", lang === "fr" ? "Jours" : "Days"], ["h", lang === "fr" ? "Heures" : "Hours"], ["m", "Minutes"], ["s", lang === "fr" ? "Secondes" : "Seconds"]];
+  const units: [keyof NonNullable<typeof p>, string][] = [["d", fr(lang, "Jours", "Days")], ["h", fr(lang, "Heures", "Hours")], ["m", "Minutes"], ["s", fr(lang, "Secondes", "Seconds")]];
   return (
-    <div className="countdown" role="timer" aria-label={lang === "fr" ? "Compte à rebours" : "Countdown"}>
+    <div className="countdown" role="timer" aria-label={fr(lang, "Compte à rebours", "Countdown")}>
       {units.map(([k, label]) => {
         const v = p ? String(p[k]).padStart(2, "0") : "--";
         return (
@@ -69,11 +76,26 @@ export function Countdown({ lang }: { lang: Lang }) {
   );
 }
 
-/** Rotating circular "tickets available" sticker. */
-function Sticker({ lang }: { lang: Lang }) {
-  const text = lang === "fr" ? "Billets disponibles • Billets disponibles • " : "Tickets available • Tickets available • ";
+/** Graphic poster for the edition, in the dress-code colours (no photos exist yet). */
+export function SunsetPoster({ lang, compact }: { lang: Lang; compact?: boolean }) {
   return (
-    <a className="sticker" href={EVENT.tickets} target="_blank" rel="noreferrer" aria-label={lang === "fr" ? "Acheter un billet" : "Buy a ticket"}>
+    <div className={`sunset-poster ${compact ? "compact" : ""}`} role="img" aria-label={`${EVENT.concept}, ${EVENT.name}, ${tx(lang, EVENT.edition)}, ${tx(lang, EVENT.date)}`}>
+      <div className="sp-sun" />
+      <div className="sp-sea" />
+      <div className="sp-copy">
+        <span className="sp-top">{EVENT.concept} · {tx(lang, EVENT.edition)}</span>
+        <strong>Sunset<em>Ritual</em></strong>
+        <span className="sp-bottom">{EVENT.shortDate} · {fr(lang, "Plage Camayenne", "Camayenne Beach")}</span>
+      </div>
+    </div>
+  );
+}
+
+/** Rotating circular sticker linking to the ticket office. */
+function Sticker({ lang }: { lang: Lang }) {
+  const text = fr(lang, "Billetterie ouverte • Billetterie ouverte • ", "Tickets on sale • Tickets on sale • ");
+  return (
+    <a className="sticker" href={EVENT.tickets} target="_blank" rel="noreferrer" aria-label={fr(lang, "Prendre mon pass", "Get my pass")}>
       <svg viewBox="0 0 120 120" aria-hidden>
         <defs><path id="sticker-circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" /></defs>
         <text><textPath href="#sticker-circle">{text}</textPath></text>
@@ -83,7 +105,26 @@ function Sticker({ lang }: { lang: Lang }) {
   );
 }
 
-/** Full event feature: image, title, date, countdown and ticket CTA. Hidden once the event is over. */
+export function EventFacts({ lang }: { lang: Lang }) {
+  return (
+    <div className="event-facts">
+      <span><CalendarDays />{tx(lang, EVENT.date)}</span>
+      <span><MapPin />{tx(lang, EVENT.venue)}</span>
+      <span><Shirt />Dress code : {EVENT.dressCode}</span>
+    </div>
+  );
+}
+
+export function DressCode({ lang }: { lang: Lang }) {
+  return (
+    <div className="dress-code">
+      <small>Dress code · {EVENT.dressCode}</small>
+      <div>{EVENT.palette.map((c) => <span key={c.hex}><i style={{ background: c.hex }} />{tx(lang, c.name)}</span>)}</div>
+    </div>
+  );
+}
+
+/** Full edition feature: poster, facts, countdown, dress code, ticket CTA and QR code. Hidden once the event is over. */
 export function EventSpotlight({ lang, vibesLink = true }: { lang: Lang; vibesLink?: boolean }) {
   const live = useEventLive();
   if (!live) return null;
@@ -92,41 +133,42 @@ export function EventSpotlight({ lang, vibesLink = true }: { lang: Lang; vibesLi
       <div className="event-glow" />
       <div className="container event-grid">
         <Reveal className="event-media">
-          <ParallaxImage src={IMG.signage} alt={`${EVENT.name}, ${EVENT.subtitle}`} amount={8} />
-          <span className="event-badge">{tx(lang, EVENT.edition)}</span>
+          <SunsetPoster lang={lang} />
           <Sticker lang={lang} />
         </Reveal>
         <div className="event-copy">
-          <Reveal><Eyebrow light>{lang === "fr" ? "Prochain rendez-vous · VIBES by SŌMA" : "Next gathering · VIBES by SŌMA"}</Eyebrow></Reveal>
-          <SplitWords text={`${EVENT.name} *${EVENT.subtitle}.*`} />
+          <Reveal><Eyebrow light>{fr(lang, "Prochain rendez-vous", "Next gathering")} · {EVENT.concept} · {tx(lang, EVENT.edition)}</Eyebrow></Reveal>
+          <SplitWords text="Sunset *Ritual.*" />
           <Reveal delay={0.1}>
-            <p className="event-date"><CalendarDays />{tx(lang, EVENT.date)} · Conakry</p>
-            <p className="lede">{lang === "fr"
-              ? "Après une première édition qui a marqué la ville, Onomo Vibes revient pour une deuxième édition : musique, mousse, grill et good vibes, dans l’univers signature de SŌMA."
-              : "After a first edition that left its mark on the city, Onomo Vibes is back for a second edition: music, foam, grill and good vibes, in SŌMA’s signature world."}</p>
+            <EventFacts lang={lang} />
+            <p className="lede">{fr(lang,
+              "VIBES by SŌMA revient avec une nouvelle édition : Sunset Ritual, un rendez-vous au coucher du soleil sur la plage Camayenne.",
+              "VIBES by SŌMA is back with a new edition: Sunset Ritual, a sunset gathering on Camayenne Beach.")}</p>
           </Reveal>
           <Reveal delay={0.15}><Countdown lang={lang} /></Reveal>
+          <Reveal delay={0.18}><DressCode lang={lang} /></Reveal>
           <Reveal delay={0.2} className="event-actions">
-            <Btn lang={lang} to={EVENT.tickets} external>{lang === "fr" ? "Acheter mon billet" : "Get my ticket"}</Btn>
-            <Btn lang={lang} to={SOCIAL.instagram} external variant="ghost">{lang === "fr" ? "Suivre sur Instagram" : "Follow on Instagram"}</Btn>
+            <Btn lang={lang} to={EVENT.tickets} external>{fr(lang, "Prendre mon pass", "Get my pass")}</Btn>
+            <Btn lang={lang} to={SOCIAL.instagram} external variant="ghost">{fr(lang, "Suivre sur Instagram", "Follow on Instagram")}</Btn>
           </Reveal>
-          <Reveal delay={0.25}><p className="event-note">{lang === "fr" ? "Billetterie sécurisée via Billetfacile. Places limitées." : "Secure ticketing via Billetfacile. Limited spots."}</p></Reveal>
-          {vibesLink && <Reveal delay={0.3}><L lang={lang} to="vibes" className="link-arrow light event-vibes">{lang === "fr" ? "Découvrir le site VIBES by SŌMA" : "Visit the VIBES by SŌMA site"}<ArrowUpRight /></L></Reveal>}
+          <Reveal delay={0.25} className="event-qr">
+            <a href={EVENT.tickets} target="_blank" rel="noreferrer"><img src={EVENT.qr} alt={fr(lang, "QR code de la billetterie Sunset Ritual", "Sunset Ritual ticket office QR code")} /></a>
+            <p>{fr(lang, "Scannez pour accéder à la billetterie. La billetterie est ouverte ; le programme et les informations pratiques seront communiqués prochainement.", "Scan to open the ticket office. Tickets are on sale; the programme and practical details will be shared soon.")}</p>
+          </Reveal>
+          {vibesLink && <Reveal delay={0.3}><L lang={lang} to="vibes" className="link-arrow light event-vibes">{fr(lang, "Découvrir VIBES by SŌMA", "Discover VIBES by SŌMA")}<ArrowUpRight /></L></Reveal>}
         </div>
       </div>
     </section>
   );
 }
 
-/** Small chip used in the hero: event name, days left, ticket link. */
+/** Small chip used in heroes: edition name, days left, ticket link. */
 export function EventChip({ lang }: { lang: Lang }) {
   const now = useNow();
   if (now !== null && now >= END) return null;
-  const d = daysLeft(now);
-  const when = d === null ? "21.11.2026" : d === 0 ? (lang === "fr" ? "C’est aujourd’hui" : "Today") : `J-${d}`;
   return (
     <a className="hero-chip" href={EVENT.tickets} target="_blank" rel="noreferrer">
-      <span className="pulse" /><strong>{EVENT.name}</strong> · {tx(lang, EVENT.edition)} · {when}<em>{lang === "fr" ? "Billets" : "Tickets"}<ArrowUpRight /></em>
+      <span className="pulse" />{EVENT.concept} · <strong>{EVENT.name}</strong> · {whenLabel(lang, now)}<em>{fr(lang, "Billetterie", "Tickets")}<ArrowUpRight /></em>
     </a>
   );
 }
@@ -135,25 +177,23 @@ export function EventChip({ lang }: { lang: Lang }) {
 export function HeaderTickets({ lang }: { lang: Lang }) {
   const live = useEventLive();
   if (!live) return null;
-  return <a className="header-tickets" href={EVENT.tickets} target="_blank" rel="noreferrer"><span className="pulse" />{lang === "fr" ? "Billets" : "Tickets"}</a>;
+  return <a className="header-tickets" href={EVENT.tickets} target="_blank" rel="noreferrer"><span className="pulse" />{fr(lang, "Billetterie", "Tickets")}</a>;
 }
 
-/** Compact banner for inner pages linked to the event (VIBES world, past edition). */
+/** Compact banner for inner pages linked to the edition. */
 export function EventBanner({ lang }: { lang: Lang }) {
   const now = useNow();
   if (now !== null && now >= END) return null;
-  const d = daysLeft(now);
   return (
     <section className="section tight">
       <div className="container">
         <Reveal>
           <a className="event-banner" href={EVENT.tickets} target="_blank" rel="noreferrer" data-cursor="view">
-            <img src={IMG.foam} alt="" loading="lazy" />
             <div>
-              <span>{tx(lang, EVENT.edition)} · {tx(lang, EVENT.date)}</span>
-              <h3>{EVENT.name} <em>{EVENT.subtitle}</em></h3>
+              <span>{EVENT.concept} · {tx(lang, EVENT.edition)} · {tx(lang, EVENT.date)} · {tx(lang, EVENT.venue)}</span>
+              <h3>Sunset <em>Ritual</em></h3>
             </div>
-            <strong>{d === null ? "" : d === 0 ? (lang === "fr" ? "Aujourd’hui" : "Today") : `J-${d}`}</strong>
+            <strong>{now === null ? "" : whenLabel(lang, now)}</strong>
             <i><Ticket /></i>
           </a>
         </Reveal>
@@ -165,6 +205,5 @@ export function EventBanner({ lang }: { lang: Lang }) {
 export function EventMenuLink({ lang, onClick }: { lang: Lang; onClick?: () => void }) {
   const live = useEventLive();
   if (!live) return null;
-  return <a className="menu-event" href={EVENT.tickets} target="_blank" rel="noreferrer" onClick={onClick}><span className="pulse" /><div><small>{tx(lang, EVENT.edition)} · 21.11.2026</small><strong>{EVENT.name} · {lang === "fr" ? "Billets" : "Tickets"}</strong></div><ArrowUpRight /></a>;
+  return <a className="menu-event" href={EVENT.tickets} target="_blank" rel="noreferrer" onClick={onClick}><span className="pulse" /><div><small>{EVENT.concept} · {tx(lang, EVENT.edition)} · {EVENT.shortDate}</small><strong>{EVENT.name} · {fr(lang, "Billetterie", "Tickets")}</strong></div><ArrowUpRight /></a>;
 }
-

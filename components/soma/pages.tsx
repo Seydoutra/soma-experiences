@@ -3,7 +3,7 @@
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Minus, Plus, ShoppingBag, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { CONTACT, FAQ, GALLERY, IMG, POSTS, PRODUCTS, PROJECTS, SERVICES, WORLDS, type Lang, tx, waLink } from "./data";
+import { CONTACT, FAQ, GALLERY, IMG, POSTS, PRODUCTS, PROJECTS, SERVICES, WORLDS, type Lang, tx, waLink, EVENT } from "./data";
 import { Btn, Eyebrow, L } from "./chrome";
 import { EASE, Marquee, ParallaxImage, Reveal, ScrollHighlight, SplitWords, Spotlight } from "./motion";
 import { FaqList, FinalCta, Offers, Process, WorldsStack } from "./home";
@@ -123,7 +123,7 @@ export function WorldDetail({ lang, slug }: { lang: Lang; slug: string }) {
             <div className="world-services">
               {w.services[lang].map((s, i) => <Reveal key={s} delay={i * 0.08}><Spotlight className="ws-card"><span>0{i + 1}</span><h3>{s}</h3></Spotlight></Reveal>)}
             </div>
-            <Reveal className="row-actions">{w.site && <Btn lang={lang} to={w.site}>{fr(lang, `Visiter le site ${w.name}`, `Visit the ${w.name} site`)}</Btn>}<Btn lang={lang} to="reservation" variant={w.site ? "dark" : "gold"}>{fr(lang, `Réserver avec ${w.name}`, `Book with ${w.name}`)}</Btn><Btn lang={lang} to={waLink(fr(lang, `Bonjour ${w.name}, je souhaite des informations.`, `Hello ${w.name}, I’d like some information.`))} external variant="dark">WhatsApp</Btn></Reveal>
+            <Reveal className="row-actions">{w.site && <Btn lang={lang} to={w.site}>{fr(lang, `Visiter le site ${w.name}`, `Visit the ${w.name} site`)}</Btn>}{w.slug === "vibes-by-soma" ? <Btn lang={lang} to={EVENT.tickets} external variant="dark">{fr(lang, "Prendre mon pass", "Get my pass")}</Btn> : <Btn lang={lang} to="reservation" variant={w.site ? "dark" : "gold"}>{fr(lang, `Réserver avec ${w.name}`, `Book with ${w.name}`)}</Btn>}<Btn lang={lang} to={waLink(fr(lang, `Bonjour ${w.name}, je souhaite des informations.`, `Hello ${w.name}, I’d like some information.`))} external variant="dark">WhatsApp</Btn></Reveal>
           </div>
         </div>
       </section>
